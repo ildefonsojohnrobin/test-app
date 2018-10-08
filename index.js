@@ -6,7 +6,8 @@ const bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 
 //Set up default mongoose connection
-var mongoDB = 'mongodb://127.0.0.1/my_database';
+//var mongoDB = 'mongodb://127.0.0.1/my_database';
+var mongoDB = 'mongodb://root:asdfg123@ds225543.mlab.com:25543/heroku-test-db'
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
 var db = mongoose.connection;
