@@ -39,24 +39,19 @@ app.post('/', function (req, res, cb) {
 	var app = res;
 	Users.find({ username: req.body.user }, function(err, user) {
 		if (err) throw err;
-			if (user.length) {
-				console.log("Username already exists");
-				app.redirect(req.get('referer'));
-				return null;
+		if (user.length) {
+			return res.send("Username already exists");
 		}
 		else{
 			Users.find({ email: req.body.email }, function(err, user) {
 		  		if (err) throw err;
 				if (user.length) {
-					console.log("Email already exists");
-					app.redirect(req.get('referer'));
-					return null;
+					return res.send("Email already exists");
 				}
 				else{
 					//checks if all fields are filled
 					if(!req.body.user.length || !req.body.pw.length || !req.body.email.length ){
-						console.log("All fields are required");
-						app.redirect(req.get('referer'));
+						return res.send("All fields are required");
 					}
 					else{
 						//creation of new User using data from form
@@ -75,6 +70,7 @@ app.post('/', function (req, res, cb) {
 				}
 			});
 		}
+		app.redirect(req.get('referer'));
 	});
 })
 
@@ -82,17 +78,14 @@ app.post('/login', function (req, res, cb) {
 	//checks if username exists in db
 	var app = res;
 	if(!req.body.login.length || !req.body.loginpw.length){
-		console.log("All fields are required");
-		app.redirect(req.get('referer'));
+		app.send("All fields are required");
 	}
 	else{
 	  	Users.find({ username: req.body.login }, function(err, user) {
 			if (err) throw err;
 			//if username is not found
 			if (!user.length){
-		  		console.log("User does not exist");
-		  		app.redirect(req.get('referer'));
-		    	return null;
+		    	return app.send("User does not exist");
 			}
 			else{
 				//if username is found, hashed password is decrypted and compared
@@ -103,8 +96,7 @@ app.post('/login', function (req, res, cb) {
 						app.render('login');
 					}
 					else {
-						console.log("Hash does not match");
-						app.redirect(req.get('referer'));
+						return app.send("Password incorrect");
 					} 
 			    });
 			}
