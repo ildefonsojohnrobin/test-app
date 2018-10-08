@@ -1,16 +1,16 @@
 //Set up dependencies
 const express = require('express')
 const bodyParser = require('body-parser');
-const app = express()
 const bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 
-//setting up port and server
+const app = express()
+
+//setting up port and server for heroku
 const host = '0.0.0.0';
 const port = process.env.PORT || 3000;
 
-//Set up default mongoose connection
-//var mongoDB = 'mongodb://127.0.0.1/my_database';
+//Set up database connection
 var mongoDB = 'mongodb://root:asdfg123@ds225543.mlab.com:25543/heroku-test-db'
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
@@ -28,6 +28,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //use User schema located in models/User.js
 var Users = require('./models/User');
 
+//render landing page
 app.get('/', function (req, res) {
   res.render('index');
 })
@@ -52,18 +53,25 @@ app.post('/', function (req, res, cb) {
 					return null;
 				}
 				else{
-					//creation of new User using data from form
-					var newUser = new Users({
-						username: req.body.user,
-						password: req.body.pw,
-						email: req.body.email
-					});
-					//saving new user in MongoDB
-					newUser.save(function(err) {
-						if (err) throw err;
-						console.log("User saved successfully");
-					});
-					app.render('index');
+					//checks if all fields are filled
+					if(!req.body.user.length || !req.body.pw.length || !req.body.email.length ){
+						console.log("All fields are required");
+						app.redirect(req.get('referer'));
+					}
+					else{
+						//creation of new User using data from form
+						var newUser = new Users({
+							username: req.body.user,
+							password: req.body.pw,
+							email: req.body.email
+						});
+						//saving new user in MongoDB
+						newUser.save(function(err) {
+							if (err) throw err;
+							console.log("User saved successfully");
+						});
+						app.render('index');
+					}
 				}
 			});
 		}
@@ -73,28 +81,36 @@ app.post('/', function (req, res, cb) {
 app.post('/login', function (req, res, cb) {
 	//checks if username exists in db
 	var app = res;
-  	Users.find({ username: req.body.login }, function(err, user) {
-		if (err) throw err;
-		//if username is not found
-		if (!user.length) {
-	  		console.log("User does not exist");
-	  		app.redirect(req.get('referer'));
-	    	return null;
-		}
-		else{
-			//if username is found, hashed password is decrypted and compared
-		    bcrypt.compare(req.body.loginpw, user[0].password, function(err, res) {
-				if(res) {
-					//if password is correct, redirects to another page
-					console.log("Logged in");
-					app.render('login');
-				} else {
-					console.log("Hash does not match");
-					app.redirect(req.get('referer'));
-				} 
-		    });
-		}
-		});
+	if(!req.body.login.length || !req.body.loginpw.length){
+		console.log("All fields are required");
+		app.redirect(req.get('referer'));
+	}
+	else{
+	  	Users.find({ username: req.body.login }, function(err, user) {
+			if (err) throw err;
+			//if username is not found
+			if (!user.length){
+		  		console.log("User does not exist");
+		  		app.redirect(req.get('referer'));
+		    	return null;
+			}
+			else{
+				//if username is found, hashed password is decrypted and compared
+			    bcrypt.compare(req.body.loginpw, user[0].password, function(err, res) {
+					if(res){
+						//if password is correct, redirects to another page
+						console.log("Logged in");
+						app.render('login');
+					}
+					else {
+						console.log("Hash does not match");
+						app.redirect(req.get('referer'));
+					} 
+			    });
+			}
+		});		
+	}
+
 })
 
 app.listen(port, host, function () {
