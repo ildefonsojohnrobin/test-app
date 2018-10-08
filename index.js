@@ -4,7 +4,6 @@ const bodyParser = require('body-parser');
 const app = express()
 const bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
-var popup = require('popups');
 
 //Set up default mongoose connection
 var mongoDB = 'mongodb://127.0.0.1/my_database';
@@ -35,22 +34,16 @@ app.post('/', function (req, res, cb) {
 	Users.find({ username: req.body.user }, function(err, user) {
 		if (err) throw err;
 			if (user.length) {
-				// console.log("Username already exists");
+				console.log("Username already exists");
 				app.redirect(req.get('referer'));
-				popup.alert({
-				    content: "Username already exists"
-				});
 				return null;
 		}
 		else{
 			Users.find({ email: req.body.email }, function(err, user) {
 		  		if (err) throw err;
 				if (user.length) {
-					// console.log("Email already exists");
+					console.log("Email already exists");
 					app.redirect(req.get('referer'));
-					popup.alert({
-				    	content: "Email already exists"
-					});
 					return null;
 				}
 				else{
@@ -63,9 +56,7 @@ app.post('/', function (req, res, cb) {
 					//saving new user in MongoDB
 					newUser.save(function(err) {
 						if (err) throw err;
-						popup.alert({
-				    		content: "User saved successfully"
-						});
+						console.log("User saved successfully");
 					});
 					app.render('index');
 				}
@@ -81,10 +72,8 @@ app.post('/login', function (req, res, cb) {
 		if (err) throw err;
 		//if username is not found
 		if (!user.length) {
-	  		popup.alert({
-	    		content: "User does not exist"
-			});
-			app.redirect(req.get('referer'));
+	  		console.log("User does not exist");
+	  		app.redirect(req.get('referer'));
 	    	return null;
 		}
 		else{
@@ -95,9 +84,7 @@ app.post('/login', function (req, res, cb) {
 					console.log("Logged in");
 					app.render('login');
 				} else {
-					popup.alert({
-			    		content: "Password incorrect"
-					});
+					console.log("Hash does not match");
 					app.redirect(req.get('referer'));
 				} 
 		    });
