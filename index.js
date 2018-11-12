@@ -93,7 +93,7 @@ app.post('/login', function (req, res, cb) {
 					if(res){
 						//if password is correct, redirects to another page
 						console.log("Logged in");
-						app.send('Welcome, ' + user[0].username);
+						app.send('<h1>Welcome, ' + user[0].username + '</h1>');
 					}
 					else {
 						return app.send("Password incorrect");
