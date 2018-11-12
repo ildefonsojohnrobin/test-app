@@ -116,7 +116,8 @@ app.post('/reset', function (req, res){
 				return res.status(404).send('Username does not exist in the database');
 			}
 			else{
-				newUser.findOneAndReplace({username: req.body.reset}, {password: '1234'}, {new: false}, function(err) {
+				console.log('It comes here');
+				newUser.findOneAndReplace({username: req.body.reset}, {password: 'asdafgasd'}, {new: false}, function(err) {
 					if (err) throw err;
 					console.log("Password reset successfully");
 					app.send('<h1>Welcome, ' + user[0].username + '</h1><br>' + 
