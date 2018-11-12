@@ -107,10 +107,10 @@ app.post('/login', function (req, res, cb) {
 
 app.post('/reset', function (req, res){
 	var app = res;
-	if(!req.body.login.length){
-		app.send("All fields are required");
+	if(!req.body.reset.length){
+		app.send("Username is required");
 	} else {
-		Users.find({ username: req.body.login }, function(err, user) { 
+		Users.find({ username: req.body.reset }, function(err, user) { 
 			if (err) throw err;
 			if (!user.length){
 				return res.status(404).send('Username does not exist in the database');
