@@ -20,9 +20,13 @@
 	      <input name="login" type="text" placeholder="username"/>
 	      <input name="loginpw" type="password" placeholder="password"/>
 				<button id="login-button">Login</button>
-				<p>Forgot password? <button action="/reset" method="post">Reset password</button></p>
 	      <p class="message">Not registered? <a href="#">Create an account</a></p>
-	    </form>
+			</form>
+			<form class="reset-form" action="/reset" method="post">
+				<p>Forgot password?</p>
+				<input name="reset" type="text" placeholder="username"/>
+				<button id="reset-button">Reset Password</button>
+			</form>
 	  </div>
 	</div>
   </body>
