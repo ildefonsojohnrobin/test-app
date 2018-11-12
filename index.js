@@ -103,7 +103,24 @@ app.post('/login', function (req, res, cb) {
 			}
 		});		
 	}
+})
 
+app.post('/reset', function (req, res){
+	var app = res;
+	if(!req.body.login.length){
+		app.send("All fields are required");
+	} else {
+		Users.find({ username: req.body.login }, function(err, user) { 
+			if (err) throw err;
+			if (!user.length){
+				return res.status(404).send('Username does not exist in the database');
+			}
+			else{
+				app.send('<h1>Welcome, ' + user[0].username + '</h1><br>' + 
+				'Your new password is ' + user[0].password);
+			}
+		});
+	}
 })
 
 app.listen(port, host, function () {
