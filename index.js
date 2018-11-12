@@ -65,7 +65,9 @@ app.post('/', function (req, res, cb) {
 							if (err) throw err;
 							console.log("User saved successfully");
 						});
-						app.render('index');
+						app.get('/', function (req, res) {
+							res.send('Welcome, ' + req.body.user);
+						  })
 					}
 				}
 			});
@@ -93,7 +95,7 @@ app.post('/login', function (req, res, cb) {
 					if(res){
 						//if password is correct, redirects to another page
 						console.log("Logged in");
-						app.render('login');
+						app.get('Welcome, '+ user[0].username);
 					}
 					else {
 						return app.send("Password incorrect");
