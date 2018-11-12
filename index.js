@@ -86,7 +86,7 @@ app.post('/login', function (req, res, cb) {
 			//if username is not found
 			if (!user.length){
 				//return app.send("User does not exist");
-				return res.status(404).send('User does not exist');
+				return res.status(404).send('Username does not exist in the database');
 			}
 			else{
 				//if username is found, hashed password is decrypted and compared
