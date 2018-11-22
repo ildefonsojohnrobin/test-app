@@ -63,7 +63,7 @@ var jwtCheck = jwt({
 
 app.use(jwtCheck);
 
-app.get('/api/ping', function (req, res) {
+app.get('/authorized', function (req, res) {
 	res.send('Secured Resource');
 });
 
