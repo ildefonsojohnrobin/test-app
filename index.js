@@ -5,6 +5,20 @@ const bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
 var jwt = require('express-jwt');
 var jwks = require('jwks-rsa');
+var request = require("request");
+
+var options = {
+	method: 'POST',
+	url: 'https://tenantrobin.auth0.com/oauth/token',
+	headers: { 'content-type': 'application/json' },
+	body: '{"client_id":"Bvt2S71aH3ux1TXpNNcG8YM6TxhyHWTC","client_secret":"4LqQ70x0D1w58pO9uSG7mjL_-gNSlsNUSN3NFa0i9vuoarLY75VsFOYATqW9SELE","audience":"http://agile-island-42793.herokuapp.com/api/ping","grant_type":"client_credentials"}'
+};
+
+request(options, function (error, response, body) {
+	if (error) throw new Error(error);
+
+	console.log(body);
+});
 
 const app = express()
 
