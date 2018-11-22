@@ -38,7 +38,7 @@ request(options, function (error, response, body) {
 
 
 
- var requestGet = require("request");
+ var requestGet = require("requestGet");
 
 var optionsGet = {
 	method: 'GET',
