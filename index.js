@@ -36,23 +36,18 @@ request(options, function (error, response, body) {
 	console.log(body);
 });
 
-
-
-// var request = require("request");
-console.log('testtttttttttttt', request);
-
 var optionsGet = {
 	method: 'GET',
 	url: 'https://tenantrobin.auth0.com/oauth/token',
 	headers: { authorization: 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImtpZCI6IlF6Y3lOMEl4UmtKQ05UWTJOemRDTnpKQk1USkVPRFkyTjBFeFJUa3hSVGxCTmtZeE5qazVSQSJ9.eyJpc3MiOiJodHRwczovL3RlbmFudHJvYmluLmF1dGgwLmNvbS8iLCJzdWIiOiJlOVFpb2xnNXRDVUtqdk15cklPTFlaODltZkpObFpEVUBjbGllbnRzIiwiYXVkIjoiaHR0cHM6Ly9hZ2lsZS1pc2xhbmQtNDI3OTMuaGVyb2t1YXBwLmNvbS9hcGkvcGluZyIsImlhdCI6MTU0Mjg5OTY3MywiZXhwIjoxNTQyOTg2MDczLCJhenAiOiJlOVFpb2xnNXRDVUtqdk15cklPTFlaODltZkpObFpEVSIsImd0eSI6ImNsaWVudC1jcmVkZW50aWFscyJ9.q0TZCFRn0EwAZaQEyrnmH9IRioCRDocovl9Q_g1MSfR6c4ggxJM6k3mDVaAFPmBgdQeFlKGlR7Fu9wJI0L838-qx_kA9_n21j1uvT8QV5HJgiiI6HNkP9Mml_u6KbMQDyKsYOOvpWE0QICWy3YhbpFYIkWxu5kMgi2V7gKaB7eBJy-93OE4p_Os1ulrQG0umiua2CVaX9pKh-e_9X8xgDNjN1yWyfqEHuyRkCDfhXcTv1dQVqZ62Bxb0X_Vw0nJws1mfeIebdJKDbB3RReqz8MJF-VyrfLpJH_Ny6RNV0nb9r1_IzO_WDt8Tv837PUumdRhcXxvvlhkN-6qkewDa-w' }
 };
 
-requestGet(optionsGet, function (error, response, body) {
+request(optionsGet, function (error, response, body) {
 	if (error) throw new Error(error); 
 	console.log(body);
 });
 
-requestGet(optionsGet, function (error, response, body) {
+request(optionsGet, function (error, response, body) {
 	if (error) throw new Error(error); 
 	console.log(body);
 });
