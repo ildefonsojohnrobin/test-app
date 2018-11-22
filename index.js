@@ -3,6 +3,8 @@ const express = require('express')
 const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt-nodejs');
 var mongoose = require('mongoose');
+var jwt = require('express-jwt');
+var jwks = require('jwks-rsa');
 
 const app = express()
 
@@ -32,6 +34,25 @@ var Users = require('./models/User');
 app.get('/', function (req, res) {
   res.render('index');
 })
+
+var jwtCheck = jwt({
+	secret: jwks.expressJwtSecret({
+		cache: true,
+		rateLimit: true,
+		jwksRequestsPerMinute: 5,
+		jwksUri: "https://tenantrobin.auth0.com/.well-known/jwks.json"
+	}),
+	audience: 'http://smpalileo-technical-test.herokuapp.com/api/ping',
+	issuer: "https://tenantrobin.auth0.com/",
+	algorithms: ['RS256']
+});
+
+app.use(jwtCheck);
+
+app.get('/api/ping', function (req, res) {
+	res.send('Secured Resource');
+});
+
 
 //post function for new users
 app.post('/', function (req, res, cb) {
