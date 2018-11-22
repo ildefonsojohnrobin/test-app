@@ -38,7 +38,8 @@ request(options, function (error, response, body) {
 
 
 
- var requestGet = require("requestGet");
+// var request = require("request");
+console.log('testtttttttttttt', request);
 
 var optionsGet = {
 	method: 'GET',
@@ -47,14 +48,12 @@ var optionsGet = {
 };
 
 requestGet(optionsGet, function (error, response, body) {
-	if (error) throw new Error(error);
-
+	if (error) throw new Error(error); 
 	console.log(body);
 });
 
 requestGet(optionsGet, function (error, response, body) {
-	if (error) throw new Error(error);
-
+	if (error) throw new Error(error); 
 	console.log(body);
 });
 
