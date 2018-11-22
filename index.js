@@ -42,7 +42,7 @@ var jwtCheck = jwt({
 		jwksRequestsPerMinute: 5,
 		jwksUri: "https://tenantrobin.auth0.com/.well-known/jwks.json"
 	}),
-	audience: 'http://smpalileo-technical-test.herokuapp.com/api/ping',
+	audience: 'https://agile-island-42793.herokuapp.com/api/ping',
 	issuer: "https://tenantrobin.auth0.com/",
 	algorithms: ['RS256']
 });
